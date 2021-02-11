@@ -1,0 +1,18 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Only allow read and write any data to db is user is logged in
+    match /{document=**} {
+      allow read, write: if isSignedIn();
+    }
+
+    // 🔥🔥🔥 Helper functions to create better rules 🔥🔥🔥
+
+    // Checks if the current user is signed in
+    function isSignedIn() {
+      return request.auth != null;
+    }
+  }
+}

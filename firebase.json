@@ -1,0 +1,56 @@
+{
+  "emulators": {
+    "auth": {
+      "enabled": true,
+      "port": 9099
+    },
+    "functions": {
+      "enabled": true,
+      "port": 5001
+    },
+    "firestore": {
+      "enabled": true,
+      "rules": "firestore.rules",
+      "port": 8080
+    },
+    "hosting": {
+      "enabled": false
+    },
+    "ui": {
+      "enabled": true,
+      "host": "localhost"
+    }
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "!/@(api)/**",
+        "function": "nextServer",
+        "dynamicLinks": true,
+        "cleanUrls": true,
+        "trailingSlash": false
+
+      },
+      {
+        "source": "/api/helloWorld",
+        "function": "helloWorld"
+      }
+    ],
+    "headers": [ {
+      "source": "**/*.@(js|css|eot|otf|ttf|ttc|woff|font.css)",
+      "headers": [ {
+        "key": "Access-Control-Allow-Origin",
+        "value": "*"
+      } ]
+    }]
+  },
+  "functions": {
+    "source": ".",
+    "runtime": "nodejs14"
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  }
+}
